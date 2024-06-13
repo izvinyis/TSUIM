@@ -1,0 +1,43 @@
+#include <8051.h>
+
+struct DelayData {
+    unsigned int delay; 
+    unsigned char output; 
+};
+
+void msec(int x) 
+{   
+    while (x-- > 0) 
+    {
+        TH0 = (-10000) >> 8;
+        TL0 = -10000;
+        TR0 = 1;
+        TF0 = 0;
+        TR0 = 0;
+    }
+}
+
+void main() 
+{
+    int i;
+    struct DelayData data[] = {
+        {120, 0x1},  
+        {120, 0x2},  
+        {200, 0xC},   
+        {200, 0x30},
+        {120, 0x40},
+        {120, 0x80}
+    };
+    unsigned int array_length = sizeof(data) / sizeof(data[0]);
+
+    TMOD = 0x1; 
+    P1 = 0x0;
+    msec(2);
+
+    for (i = 0; i < array_length; i++) {
+        P1 = data[i].output; 
+        msec(data[i].delay); 
+    }
+    P1 = 0x0;
+    while (1);
+}

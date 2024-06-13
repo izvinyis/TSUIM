@@ -1,0 +1,7 @@
+﻿  Assembling AsmFunc.asm...
+AsmFunc.asm(1): error A2008: syntax error : .
+AsmFunc.asm(2): error A2008: syntax error : .
+AsmFunc.asm(13): error A2070: invalid instruction operands
+AsmFunc.asm(19): error A2070: invalid instruction operands
+AsmFunc.asm(32): error A2070: invalid instruction operands
+C:\Program Files\Microsoft Visual Studio\2022\Community\MSBuild\Microsoft\VC\v170\BuildCustomizations\masm.targets(70,5): error MSB3721: выход из команды "ml64.exe /c /nologo /Zi /Fo"x64\Debug\AsmFunc.obj" /W3 /errorReport:prompt  /TaAsmFunc.asm" с кодом "1".

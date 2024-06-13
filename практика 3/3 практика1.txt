@@ -1,0 +1,62 @@
+#include <8051.h>
+
+void shift_left() {
+    P0 = 0x4;
+    P2 = 0x1;
+    P2 = 0x0;
+}
+
+void print_letter(unsigned char ch) {
+    P0 = ch;
+    P2 = 0x3;
+    P2 = 0x2;
+}
+
+void move_cursor(unsigned int position) {
+    P0 = position;
+    P2 = 0x1;
+    P2 = 0x0;
+}
+
+void print_word(unsigned char *str, unsigned int size) {
+    unsigned int i;
+    unsigned char space = ' ';
+
+
+    move_cursor(0x01);
+
+    for (i = 0; i < size; ++i) {
+        if (i % 2 == 0) {
+            move_cursor(0x80 + i / 2); 
+            print_letter(str[i]);
+        } else { 
+            move_cursor(0xC0 + i / 2); 
+            print_letter(str[i]);
+        }
+    }
+
+
+    if (size % 2 != 0) {
+        move_cursor(0xC0 + size / 2); 
+        print_letter(space);
+    }
+}
+
+void main() {
+    unsigned char *str = "\xAC\xA9\xA8\xA0"; 
+    unsigned int size;
+
+
+    for (size = 0; str[size] != '\0'; ++size);
+
+
+    P0 = 0x38;
+    P2 = 0x1;
+    P2 = 0x0;
+
+    shift_left(); 
+
+    print_word(str, size);
+
+    while(1); 
+}
